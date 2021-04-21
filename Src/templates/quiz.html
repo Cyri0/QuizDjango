@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bootstrap Site</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+  
+  <style>
+    .container{
+      padding-top: 50px;
+    }
+    .col, .col-sm-6{
+      background-color: rgb(37, 37, 37);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      border: 5px solid white;
+    }
+
+    .col-sm-6, #next{
+      padding: 0;
+      overflow: hidden;
+    }
+    .col-sm-6 a , #next a{
+      font-size: 1.5rem;
+      color: white;
+      text-decoration: none;
+      text-align: center;
+      margin: 0;
+      display: block;
+      object-fit: cover;
+      line-height: 5rem;
+    }
+
+    #next{
+      display: none;
+    }
+
+  </style>
+
+</head>
+<body>
+
+<div class="container">
+  <div class="row">
+    <div class="col"><h1 id="question">{{ quiz.question }}</h1></div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 option"></div>
+    <div class="col-sm-6 option"></div>
+    <div class="col-sm-6 option"></div>
+    <div class="col-sm-6 option"></div>
+  </div>
+  <div class="row">
+    <div class="col" id="next">
+      <a href="/">Következő kérdés</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  let result = "{{ result }}";
+  let options = [
+    '<a href="/test/{{ quiz.id }}/{{ quiz.good }}">{{ quiz.good }}</a>',
+    '<a href="/test/{{ quiz.id }}/{{ quiz.option2 }}">{{ quiz.option2 }}</a>',
+    '<a href="/test/{{ quiz.id }}/{{ quiz.option3 }}">{{ quiz.option3 }}</a>',
+    '<a href="/test/{{ quiz.id }}/{{ quiz.option4 }}">{{ quiz.option4 }}</a>'
+  ]
+  options = options.sort(() => Math.random() - 0.5)
+
+  let option_holders = document.getElementsByClassName('option');
+  
+  for(let i = 0; i < option_holders.length;i++){
+    let choosen = options.pop();
+    option_holders[i].innerHTML = choosen;
+  }
+
+  if(result != ""){
+    if(result == "True"){
+      document.getElementById("question").style.color = "green";
+    } else{
+      document.getElementById("question").style.color = "red";
+    }
+    document.getElementById('next').style.display = "block";
+  }
+</script>
+
+</body>
+</html>
